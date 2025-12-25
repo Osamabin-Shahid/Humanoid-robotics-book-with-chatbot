@@ -1,0 +1,43 @@
+/**
+ * Neural Network themed CSS modules for the homepage
+ */
+
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+}
+
+@media screen and (max-width: 966px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Card styling for module cards */
+.features {
+  padding: 2rem 0;
+  width: 100%;
+}
+
+.featureSvg {
+  height: 200px;
+  width: 200px;
+}
+
+/* Card icon styling */
+.cardIcon {
+  transition: transform 0.3s ease;
+}
+
+.col:hover .cardIcon {
+  transform: scale(1.1);
+}

@@ -1,0 +1,132 @@
+/**
+ * Neural Network / AI-themed styling for the Physical AI & Humanoid Robotics book
+ */
+
+/* Neural network gradient theme */
+:root {
+  --ifm-color-primary: #4f46e5;
+  --ifm-color-primary-dark: #4338ca;
+  --ifm-color-primary-darker: #3730a3;
+  --ifm-color-primary-darkest: #312e81;
+  --ifm-color-primary-light: #818cf8;
+  --ifm-color-primary-lighter: #c7d2fe;
+  --ifm-color-primary-lightest: #e0e7ff;
+  --neural-gradient-start: #1a1a2e;
+  --neural-gradient-middle: #16213e;
+  --neural-gradient-end: #0f3460;
+  --neural-accent: #e94560;
+  --ifm-code-font-size: 95%;
+}
+
+/* Apply neural-themed gradient background */
+.hero--primary {
+  background: linear-gradient(135deg, var(--neural-gradient-start) 0%, var(--neural-gradient-middle) 50%, var(--neural-gradient-end) 100%);
+}
+
+/* Custom styling for homepage cards */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  border-color: var(--neural-accent);
+}
+
+.button--primary.button--outline {
+  color: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+}
+
+.button--primary.button--outline:hover {
+  background-color: var(--ifm-color-primary);
+  color: white;
+}
+
+/* Neural network background pattern for special sections */
+.neural-bg {
+  background:
+    radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.1) 0%, transparent 20%),
+    radial-gradient(circle at 90% 80%, rgba(233, 69, 96, 0.1) 0%, transparent 20%),
+    linear-gradient(135deg, var(--neural-gradient-start) 0%, var(--neural-gradient-end) 100%);
+}
+
+/* Homepage card hover animations */
+.col:hover {
+  z-index: 1;
+}
+
+/* Improved typography for technical content */
+.markdown h1, .markdown h2, .markdown h3 {
+  font-weight: 600;
+}
+
+/* Neural-themed code blocks */
+code {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+html[data-theme='dark'] code {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.docusaurus-highlight-code-line {
+  background-color: rgba(79, 70, 229, 0.2);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+html[data-theme='dark'] .docusaurus-highlight-code-line {
+  background-color: rgba(79, 70, 229, 0.3);
+}
+
+/* Footer styling with neural theme */
+.footer {
+  background: linear-gradient(135deg, var(--neural-gradient-end) 0%, var(--neural-gradient-start) 100%);
+}
+
+/* Navigation styling */
+.navbar {
+  background: rgba(26, 26, 46, 0.95);
+  backdrop-filter: blur(10px);
+}
+
+/* Entrance animations for homepage sections */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.fade-in-up-delay-1 {
+  animation: fadeInUp 0.6s ease-out 0.1s forwards;
+}
+
+.fade-in-up-delay-2 {
+  animation: fadeInUp 0.6s ease-out 0.2s forwards;
+}
+
+.fade-in-up-delay-3 {
+  animation: fadeInUp 0.6s ease-out 0.3s forwards;
+}
+
+/* Responsive design improvements */
+@media (max-width: 996px) {
+  .hero--primary {
+    background: linear-gradient(135deg, var(--neural-gradient-start) 0%, var(--neural-gradient-end) 100%);
+  }
+}
