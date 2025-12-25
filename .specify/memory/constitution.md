@@ -1,55 +1,61 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+ <!-- SYNC IMPACT REPORT
+Version change: N/A -> 1.0.0
+Modified principles: N/A (new constitution)
+Added sections: All sections added for AI-Native Book Creation project
+Removed sections: N/A
+Templates requiring updates:
+  - .specify/templates/plan-template.md ⚠ pending
+  - .specify/templates/spec-template.md ⚠ pending
+  - .specify/templates/tasks-template.md ⚠ pending
+  - .specify/templates/commands/*.md ⚠ pending
+Runtime docs: README.md ⚠ pending
+Follow-up TODOs: None
+-->
+
+# AI-Native Book Creation with Integrated RAG Chatbot Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### Specification-First Development
+All work must be driven by clear, versioned specifications before implementation.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### Source-Grounded Intelligence
+The chatbot and book content must rely only on verified, indexed book material—no hallucinations.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### Clarity for Technical Learners
+Content must be understandable by developers with basic to intermediate AI/software background.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### Reproducibility & Automation
+Any setup, deployment, or generation step must be repeatable via documented commands.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### Separation of Concerns
+Book content, chatbot backend, embeddings, database, and UI must be cleanly modularized.
 
-### [PRINCIPLE_6_NAME]
+### AI Behavior Constraints
+No hallucinated answers, no external knowledge unless explicitly indexed, prefer "I don't know based on the provided content" over guessing.
 
+## Book Authoring Standards
+Framework: Docusaurus
+Writing method: Claude Code + Spec-Kit Plus
+Structure: Clear chapters with headings and sub-headings, progressive learning flow, tone: instructional, precise, non-marketing
+Content must be: Original, technically accurate, free from filler or vague explanations
 
-[PRINCIPLE__DESCRIPTION]
+## RAG Chatbot Architecture
+Architecture: FastAPI backend, OpenAI Agents / ChatKit SDK, Neon Serverless Postgres (metadata + auth), Qdrant Cloud Free Tier (vector storage)
+Capabilities: Answer questions using entire book content, answer questions using only user-selected text, reject questions when context is insufficient
+Behavior: Cite chapter/section source internally, never invent facts beyond indexed content
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Technical Constraints
+Deployment: Book hosted on GitHub Pages, backend deployed separately (cloud-ready)
+Code quality: Clear, maintainable, well-documented code with proper testing
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+## Development Workflow
+All development must follow Spec-Driven Development (SDD) methodology using Spec-Kit Plus tools. Every feature must have clear specifications before implementation, with testable acceptance criteria and proper documentation.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Quality Standards
+All code must include comprehensive tests, proper error handling, and follow security best practices. Content must be technically accurate and verified against authoritative sources.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+This constitution governs all development activities for the AI-Native Book Creation project. All team members must adhere to these principles and standards. Any deviations require explicit approval and documentation of the rationale.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2025-12-23 | **Last Amended**: 2025-12-23

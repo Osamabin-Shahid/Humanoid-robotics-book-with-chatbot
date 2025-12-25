@@ -1,0 +1,63 @@
+# Content API Contract
+
+## Purpose
+This contract defines the API for any interactive features that may be added to the educational content, such as quiz systems, progress tracking, or interactive simulation examples.
+
+## Base URL
+`/api/v1`
+
+## Endpoints
+
+### GET /progress/{userId}/{moduleId}
+**Purpose**: Retrieve user progress for a specific module
+**Response**:
+```json
+{
+  "moduleId": "string",
+  "completedChapters": ["string"],
+  "currentChapter": "string",
+  "completionPercentage": "number"
+}
+```
+
+### POST /progress/{userId}/{moduleId}
+**Purpose**: Update user progress for a specific module
+**Request**:
+```json
+{
+  "chapterId": "string",
+  "status": "completed|in-progress",
+  "timestamp": "string"
+}
+```
+**Response**:
+```json
+{
+  "success": "boolean",
+  "message": "string"
+}
+```
+
+### GET /content/{moduleId}/{chapterId}
+**Purpose**: Retrieve specific chapter content (if served dynamically)
+**Response**:
+```json
+{
+  "chapterId": "string",
+  "title": "string",
+  "content": "string",
+  "relatedResources": ["string"]
+}
+```
+
+### GET /simulation/{type}
+**Purpose**: Retrieve simulation examples or concepts (for interactive elements)
+**Response**:
+```json
+{
+  "simulationType": "gazebo|unity|sensor",
+  "examples": ["string"],
+  "concepts": ["string"],
+  "relatedChapters": ["string"]
+}
+```
