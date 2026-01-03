@@ -6,8 +6,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 (module.exports = {
   title: 'Physical AI & Humanoid Robotics',
   tagline: 'A comprehensive guide to embodied AI systems',
-  url: 'https://your-github-username.github.io',
-  baseUrl: '/humanoid-robotics-ai-book/',
+  url: 'https://humanoid-robotics-book-with-chatbot-nine.vercel.app/',
+  baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
