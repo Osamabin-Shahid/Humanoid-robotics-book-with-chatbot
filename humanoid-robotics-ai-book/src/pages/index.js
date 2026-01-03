@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import Chatbot from '../components/Chatbot/Chatbot';
 import styles from './index.module.css';
 
 function HomepageHeader() {
@@ -16,7 +17,7 @@ function HomepageHeader() {
           <Link
             className="button button--secondary button--lg"
             to="/docs/intro">
-            Start Reading - 20min ⏱️
+            Start Reading - ⏱️
           </Link>
         </div>
       </div>
@@ -105,6 +106,16 @@ export default function Home() {
       <HomepageHeader />
       <main>
         <HomepageCards />
+        <section className="container padding-vert--lg">
+          <div className="row">
+            <div className="col col--12">
+              <Chatbot
+                title="Book Assistant"
+                subtitle="Ask me anything about humanoid robotics and AI - I can answer based on the book content!"
+              />
+            </div>
+          </div>
+        </section>
       </main>
     </Layout>
   );

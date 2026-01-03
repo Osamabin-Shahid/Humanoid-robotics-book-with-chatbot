@@ -1,0 +1,82 @@
+openapi: 3.0.0
+info:
+  title: RAG Agent API
+  description: API for the RAG agent that integrates with Qdrant for semantic retrieval and uses Gemini for response generation
+  version: 1.0.0
+
+paths:
+  /query:
+    post:
+      summary: Submit a query to the RAG agent
+      description: Process a natural language query and return a response based on retrieved book content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: The natural language query
+                  example: "What is the main concept of neural networks?"
+                max_chunks:
+                  type: integer
+                  description: Maximum number of chunks to retrieve (default: 5)
+                  example: 5
+              required:
+                - query
+      responses:
+        '200':
+          description: Successful response with answer and source information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+                    description: The generated response based on retrieved content
+                  source_chunks:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        content:
+                          type: string
+                          description: The retrieved content chunk
+                        source:
+                          type: string
+                          description: Source reference for the chunk
+                        similarity_score:
+                          type: number
+                          description: Similarity score for the chunk
+                  confidence:
+                    type: number
+                    description: Confidence score for the response (0-1)
+        '400':
+          description: Bad request - invalid query
+        '500':
+          description: Internal server error - likely Qdrant or Gemini API issue
+
+  /health:
+    get:
+      summary: Check health of the RAG agent
+      description: Verify that the agent can connect to Qdrant and Gemini API
+      responses:
+        '200':
+          description: Health check successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "healthy"
+                  qdrant_connected:
+                    type: boolean
+                    example: true
+                  gemini_connected:
+                    type: boolean
+                    example: true

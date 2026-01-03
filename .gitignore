@@ -1,6 +1,36 @@
 # Dependencies
 node_modules/
 
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.git/modules/
+.hypothesis/
+.pytest_cache/
+.pyre/
+.mypy_cache/
+
+# Virtual Environment
+.venv/
+venv/
+env/
+
 # Docusaurus
 .build/
 .dist/
@@ -33,6 +63,9 @@ Thumbs.db
 # Testing
 coverage/
 .nyc_output/
+htmlcov/
+.coverage
+.cov/
 
 # OS generated files
 .DS_Store
@@ -43,3 +76,18 @@ coverage/
 ehthumbs.db
 Thumbs.db
 Thumbs.db:encryptable
+
+# Backend specific
+backend/__pycache__/
+backend/.pytest_cache/
+backend/.coverage
+backend/logs/
+*.sqlite
+*.db
+
+# Data and models
+*.pickle
+*.pkl
+*.h5
+*.tflite
+*.onnx

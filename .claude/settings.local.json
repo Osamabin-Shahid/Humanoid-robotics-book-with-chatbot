@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm run build)"
+      "Bash(npm run build)",
+      "Bash(.venv/Scripts/python.exe tests/test_retrieval_validation.py)",
+      "Bash(pip install cohere qdrant-client beautifulsoup4 requests python-dotenv pytest fastapi uvicorn)"
     ]
   }
 }

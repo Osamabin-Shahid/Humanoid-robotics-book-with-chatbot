@@ -1,0 +1,309 @@
+openapi: 3.0.0
+info:
+  title: RAG Retrieval and Validation API
+  description: API for retrieving and validating embedded book content from Qdrant
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+
+paths:
+  /api/v1/retrieve:
+    post:
+      summary: Retrieve relevant content based on natural language query
+      description: Performs semantic search in Qdrant to find relevant text chunks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+      responses:
+        '200':
+          description: Successfully retrieved relevant content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResponse'
+        '400':
+          description: Invalid query parameters
+        '500':
+          description: Internal server error
+      tags:
+        - retrieval
+
+  /api/v1/validate:
+    post:
+      summary: Validate a specific retrieval result
+      description: Validates the quality and accuracy of a retrieval result
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidationRequest'
+      responses:
+        '200':
+          description: Validation completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResponse'
+        '400':
+          description: Invalid validation request
+        '500':
+          description: Internal server error
+      tags:
+        - validation
+
+  /api/v1/validate/{result_id}:
+    get:
+      summary: Get validation report for a specific result
+      description: Retrieves the validation report for a specific retrieval result
+      parameters:
+        - name: result_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the result to validate
+      responses:
+        '200':
+          description: Validation report retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResponse'
+        '404':
+          description: Result not found
+        '500':
+          description: Internal server error
+      tags:
+        - validation
+
+  /api/v1/pipeline/verify:
+    get:
+      summary: Verify end-to-end pipeline integrity
+      description: Validates the complete pipeline from storage to retrieval
+      responses:
+        '200':
+          description: Pipeline verification completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineVerificationResponse'
+        '500':
+          description: Internal server error
+      tags:
+        - pipeline
+
+components:
+  schemas:
+    QueryRequest:
+      type: object
+      required:
+        - query
+      properties:
+        query:
+          type: string
+          description: Natural language query to search for
+          example: "Explain ROS 2 foundations"
+        limit:
+          type: integer
+          description: Maximum number of results to return
+          default: 10
+          minimum: 1
+          maximum: 100
+        min_score:
+          type: number
+          description: Minimum similarity score threshold
+          default: 0.5
+          minimum: 0.0
+          maximum: 1.0
+
+    QueryResponse:
+      type: object
+      required:
+        - query_id
+        - results
+        - total_results
+      properties:
+        query_id:
+          type: string
+          description: Unique identifier for the query
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RetrievalResult'
+        total_results:
+          type: integer
+          description: Total number of results found
+        query_text:
+          type: string
+          description: The original query text
+
+    RetrievalResult:
+      type: object
+      required:
+        - result_id
+        - content
+        - source_url
+        - similarity_score
+        - metadata
+      properties:
+        result_id:
+          type: string
+          description: Unique identifier for this result
+        content:
+          type: string
+          description: The retrieved text content
+        source_url:
+          type: string
+          description: URL of the original document
+        similarity_score:
+          type: number
+          description: Semantic similarity score
+          minimum: 0.0
+          maximum: 1.0
+        metadata:
+          $ref: '#/components/schemas/ResultMetadata'
+        validation_score:
+          type: number
+          description: Validation score for this result
+          minimum: 0.0
+          maximum: 1.0
+
+    ResultMetadata:
+      type: object
+      properties:
+        chunk_id:
+          type: string
+          description: ID of the original text chunk
+        created_at:
+          type: string
+          format: date-time
+          description: When the chunk was created
+        updated_at:
+          type: string
+          format: date-time
+          description: When the chunk was last updated
+        content_hash:
+          type: string
+          description: Hash of the original content
+        token_count:
+          type: integer
+          description: Number of tokens in the chunk
+        section:
+          type: string
+          description: Section title from the original document
+
+    ValidationRequest:
+      type: object
+      required:
+        - result_id
+      properties:
+        result_id:
+          type: string
+          description: ID of the result to validate
+        expected_content:
+          type: string
+          description: Expected content for validation
+        validation_type:
+          type: string
+          description: Type of validation to perform
+          enum: [completeness, relevance, accuracy]
+          default: relevance
+
+    ValidationResponse:
+      type: object
+      required:
+        - validation_id
+        - result_id
+        - validation_report
+      properties:
+        validation_id:
+          type: string
+          description: Unique identifier for this validation
+        result_id:
+          type: string
+          description: ID of the validated result
+        validation_report:
+          $ref: '#/components/schemas/ValidationReport'
+
+    ValidationReport:
+      type: object
+      required:
+        - alignment_valid
+        - metadata_correct
+        - content_coherent
+        - overall_score
+      properties:
+        alignment_valid:
+          type: boolean
+          description: Whether content aligns with query intent
+        metadata_correct:
+          type: boolean
+          description: Whether metadata is accurate
+        content_coherent:
+          type: boolean
+          description: Whether content is coherent and complete
+        overall_score:
+          type: number
+          description: Overall validation score
+          minimum: 0.0
+          maximum: 1.0
+        issues_found:
+          type: array
+          items:
+            type: string
+          description: List of validation issues found
+        validation_timestamp:
+          type: string
+          format: date-time
+          description: When validation was performed
+
+    PipelineVerificationResponse:
+      type: object
+      required:
+        - status
+        - verification_details
+      properties:
+        status:
+          type: string
+          description: Overall verification status
+          enum: [success, partial, failed]
+        verification_details:
+          type: object
+          properties:
+            store_to_retrieve_test:
+              type: boolean
+              description: Whether store-to-retrieve pipeline works
+            metadata_alignment:
+              type: boolean
+              description: Whether metadata aligns correctly
+            content_integrity:
+              type: boolean
+              description: Whether content integrity is maintained
+            performance_metrics:
+              $ref: '#/components/schemas/PerformanceMetrics'
+
+    PerformanceMetrics:
+      type: object
+      properties:
+        query_response_time:
+          type: number
+          description: Average query response time in seconds
+        retrieval_accuracy:
+          type: number
+          description: Accuracy of retrieval results
+        validation_success_rate:
+          type: number
+          description: Success rate of validation operations
+
+tags:
+  - name: retrieval
+    description: Content retrieval operations
+  - name: validation
+    description: Result validation operations
+  - name: pipeline
+    description: End-to-end pipeline operations
